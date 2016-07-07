@@ -1,0 +1,36 @@
+{
+  "name": "dred-product-review",
+  "authors": [
+    "Andrea SonnY <andreasonny83@gmail.com>"
+  ],
+  "main": "/index.html",
+  "homepage": "https://github.com/andreasonny83/dred-product-review",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andreasonny83/dred-product-review.git"
+  },
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "angular-animate": "^1.5.0",
+    "angular-sanitize": "^1.5.0",
+    "angular-material": "^1.0.9",
+    "angular-input-stars-directive": "angular-input-stars#^1.5.5"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.5.0"
+  },
+  "keywords": [
+    "angular",
+    "AngularJS"
+  ],
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
+  "license": "MIT",
+  "private": true,
+  "resolutions": {
+    "angular": "1.5.7"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "version": "0.0.1",
+  "name": "DrEd Product Review",
+  "launch_path": "/index.html",
+  "description": "Product review for DrEd.com built in Angular",
+  "icons": {
+    "128": "/images/icon-128x128.png"
+  },
+  "developer": {
+    "name": "Andrea Sonny <andreasonny83@gmail.com>",
+    "url": "https://github.com/andreasonny83"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {
+  },
+  "locales": {
+    "en": {
+      "name": "DrEd Product Review",
+      "description": "Product review for DrEd.com built in Angular"
+    }
+  }
+}
