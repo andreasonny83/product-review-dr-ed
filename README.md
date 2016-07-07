@@ -2,6 +2,8 @@
 
 > Product review for DrEd.com built in AngularJS
 
+![Build Status][travis-ci]
+
 ## Installation
 
 [Download the latest release][release_link] of this project or Git clone this
@@ -70,3 +72,4 @@ npm test
 MIT © [Andrea Sonny](https://andreasonny.mit-license.org/@2016)
 
 [release_link]: https://github.com/andreasonny83/product-review-dr-ed/releases/latest
+[travis-ci]: https://travis-ci.org/andreasonny83/product-review-dr-ed.svg?branch=master)](https://travis-ci.org/andreasonny83/product-review-dr-ed
