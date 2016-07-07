@@ -2,7 +2,7 @@
 
 > Product review for DrEd.com built in AngularJS
 
-![Build Status][travis-ci]
+[![Build Status](https://travis-ci.org/andreasonny83/product-review-dr-ed.svg?branch=master)](https://travis-ci.org/andreasonny83/product-review-dr-ed)
 
 Demo version available [here][demo]
 
@@ -74,5 +74,4 @@ npm test
 MIT © [Andrea Sonny](https://andreasonny.mit-license.org/@2016)
 
 [release_link]: https://github.com/andreasonny83/product-review-dr-ed/releases/latest
-[travis-ci]: https://travis-ci.org/andreasonny83/product-review-dr-ed.svg?branch=master)](https://travis-ci.org/andreasonny83/product-review-dr-ed
-[demo]: product-review.sonnywebdesign.com/?product=Malaria-tablets
+[demo]: http://product-review.sonnywebdesign.com/?product=Malaria-tablets
