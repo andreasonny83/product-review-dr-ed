@@ -39,18 +39,18 @@
         templateUrl: 'app/home/home.html',
         controller: 'HomeController',
         controllerAs: 'homeCtrl'
-      })
-      .when('/404', {
-        templateUrl: '404.html'
-      })
-      .when('/done', {
-        templateUrl: 'app/submitted/submitted.html',
-        controller: 'SubmittedController',
-        controllerAs: 'sbCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
       });
+      // .when('/404', {
+      //   templateUrl: '404.html'
+      // })
+      // .when('/done', {
+      //   templateUrl: 'app/submitted/submitted.html',
+      //   controller: 'SubmittedController',
+      //   controllerAs: 'sbCtrl'
+      // })
+      // .otherwise({
+      //   redirectTo: '/'
+      // });
 
     // use the HTML5 History API
     $locationProvider.html5Mode(true);

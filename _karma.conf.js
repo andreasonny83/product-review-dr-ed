@@ -1,7 +1,18 @@
-// Karma configuration
-// Generated on Thu Jul 07 2016 18:38:49 GMT+0100 (BST)
+/**
+  DrEd.com Product review
+  Copyright (c) 2016 by andreasonny83. All Rights Reserved.
+
+  This code may only be used under the MIT style license.
+
+  MIT license: https://andreasonny.mit-license.org/@2016/
+*/
+
+'use strict';
+
+var bowerList = require('./conf/karma-files.conf.js');
 
 module.exports = function(config) {
+
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -9,23 +20,16 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'angular-filesort'],
 
     // list of files / patterns to load in the browser
-    files: [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-animate/angular-animate.js',
-      'bower_components/angular-route/angular-route.js',
-      'bower_components/angular-sanitize/angular-sanitize.js',
-      'bower_components/angular-aria/angular-aria.js',
-      'bower_components/angular-messages/angular-messages.js',
-      'bower_components/angular-material/angular-material.js',
-      'bower_components/angular-input-stars-directive/angular-input-stars.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'src/app/app.js',
-      'src/app/**/*.js',
-      'test/**/*.js'
-    ],
+    files: bowerList(['src/app/**/*.js']),
+
+    angularFilesort: {
+      whitelist: [
+        'src/app/**/*.js'
+      ]
+    },
 
     // list of files to exclude
     exclude: [
@@ -42,19 +46,11 @@ module.exports = function(config) {
     reporters: ['progress'],
 
     // web server port
-    port: 8080,
-
-    // Which plugins to enable
-    plugins: [
-      'karma-phantomjs-launcher',
-      'karma-jasmine'
-    ],
+    port: 9876,
 
     // enable / disable colors in the output (reporters and logs)
     colors: true,
 
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -62,14 +58,16 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: [
+      'PhantomJS'
+    ],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
 
     // Concurrency level
-    // how many browser should be started simultaneous
+    // how many browser should be started simultanous
     concurrency: Infinity
   });
 };
