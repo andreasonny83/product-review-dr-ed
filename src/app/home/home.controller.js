@@ -14,34 +14,87 @@
     .module('app')
     .controller('HomeController', HomeController);
 
-  function HomeController($routeParams, $location) {
+  function HomeController($rootScope, $routeParams, $location, $mdToast) {
     var vm = this;
-    var productName = $routeParams.productId || null;
-    productName = productName.match(/(\w+)-(\w+)/);
 
-    console.log(productName);
-    if (!productName || productName.length !== 3) {
-      $location.path('/404/error');
-      return;
-    }
+    /**
+     * initialize the controller
+     */
+    function _init() {
+      vm.toast = $mdToast;
+      vm.secondLocked = true;
+      vm.thirdLocked = true;
+      $rootScope.done = false;
+      vm.socials = ['Facebook', 'Twitter', 'LinkedIn'];
+      vm.socialsSelected = [];
+      var search = $location.search();
+      var productName;
 
-    vm.productName = [productName[1].toLowerCase(),
-                      productName[2].toLowerCase()
-                    ].join(' ');
-
-    vm.next = function() {
-      if (!vm.selectedIndex) {
-        if (!vm.user ||
-            !vm.user.name ||
-            !vm.user.review ||
-            !vm.user.review) {
-          return;
-        }
+      if (!search.product || !search.product.length) {
+        $location.path('/404');
+        return;
       }
 
-      vm.selectedIndex += 1;
+      productName = search.product.match(/(\w+)/g);
+
+      // The product name is not valid
+      if (!productName || productName.length < 1) {
+        $location.path('/404');
+        return;
+      }
+
+      productName.filter(function(val) {
+        return val.toLowerCase();
+      });
+
+      vm.productName = productName.join(' ');
+    }
+
+    vm.publish = function() {
+      $rootScope.done = true;
+      $location.path('/done');
     };
+
+    _init();
   }
 
-  HomeController.$inject = ['$routeParams', '$location'];
+  HomeController.prototype.next = function(isValid) {
+    var vm = this;
+    // If the form is not validated, show an error message
+    if (!isValid) {
+      vm.toast.show(
+        vm.toast.simple().textContent(
+          'You must fill all the required information first.'
+        ));
+
+      return;
+    }
+    if (vm.selectedIndex === 0) {
+      vm.secondLocked = false;
+    } else {
+      vm.thirdLocked = false;
+    }
+
+    vm.selectedIndex += 1;
+  };
+
+  HomeController.prototype.toggleSocials = function(item) {
+    var vm = this;
+    var idx = vm.socialsSelected.indexOf(item);
+
+    if (idx > -1) {
+      vm.socialsSelected.splice(idx, 1);
+    } else {
+      vm.socialsSelected.push(item);
+    }
+  };
+
+  HomeController.prototype.exists = function(item) {
+    return this.socialsSelected.indexOf(item) > -1;
+  };
+
+  HomeController.$inject = ['$rootScope',
+                            '$routeParams',
+                            '$location',
+                            '$mdToast'];
 })();

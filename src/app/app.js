@@ -22,7 +22,6 @@
 
   // safe dependency injection
   // this prevents minification issues
-  // config.$inject = ['$routeProvider'];
   config.$inject = ['$routeProvider', '$locationProvider'];
 
   /**
@@ -32,24 +31,28 @@
    * into separate file
    *
    */
-  // function config($routeProvider) {
   function config($routeProvider, $locationProvider) {
 
     // routes
     $routeProvider
-      .when('/:productId', {
+      .when('/', {
         templateUrl: 'app/home/home.html',
         controller: 'HomeController',
         controllerAs: 'homeCtrl'
       })
-      .when('/404/error', {
-        templateUrl: '404-not-found.html'
+      .when('/404', {
+        templateUrl: '404.html'
+      })
+      .when('/done', {
+        templateUrl: 'app/submitted/submitted.html',
+        controller: 'SubmittedController',
+        controllerAs: 'sbCtrl'
+      })
+      .otherwise({
+        redirectTo: '/'
       });
-      // .otherwise({
-      //   redirectTo: '/404/error'
-      // });
 
     // use the HTML5 History API
-    // $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true);
   }
 })();

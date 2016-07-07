@@ -1,8 +1,10 @@
-/**
-  DrEd.com Product review
-  Copyright (c) 2016 by andreasonny83. All Rights Reserved.
+'use strict';
 
-  This code may only be used under the MIT style license.
+describe('page header', function() {
+  beforeEach(module('app'));
 
-  MIT license: https://andreasonny.mit-license.org/@2016/
-*/
+  it('Render Header', function($compile, $rootScope) {
+    var element = $compile('<page-header></page-header>')($rootScope);
+    expect(element).toContain('DrEd.com Product Review');
+  });
+});

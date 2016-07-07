@@ -1,14 +1,14 @@
 {
-  "name": "dred-product-review",
+  "name": "product-review-dr-ed",
   "version": "0.0.0",
   "author": "Andrea SonnY <andreasonny83@gmail.com>",
-  "main": "_build/index.html",
+  "main": "index.html",
   "repository": {
     "type": "git",
-    "url": "https://github.com/andreasonny83/dred-product-review"
+    "url": "https://github.com/andreasonny83/product-review-dr-ed"
   },
   "bugs": {
-    "url": "https://github.com/andreasonny83/dred-product-review/issues"
+    "url": "https://github.com/andreasonny83/product-review-dr-ed/issues"
   },
   "license": "MIT",
   "private": true,
@@ -40,17 +40,17 @@
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-angular-filesort": "^1.0.1",
-    "karma-jasmine": "^0.3.7",
-    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-jasmine": "^0.3.8",
+    "karma-phantomjs-launcher": "^1.0.1",
     "minimist": "^1.2.0",
     "open": "0.0.5",
-    "phantomjs-prebuilt": "^2.1.5",
+    "phantomjs-prebuilt": "^2.1.7",
     "run-sequence": "^1.1.5",
     "watch": "^0.16.0",
     "wiredep": "^3.0.0"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12"
   },
   "scripts": {
     "start": "gulp serve",
@@ -63,7 +63,8 @@
       "angular": true
     },
     "env": {
-      "browser": true
+      "browser": true,
+      "jasmine": true
     }
   }
 }

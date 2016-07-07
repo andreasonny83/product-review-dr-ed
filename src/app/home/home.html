@@ -1,66 +1,153 @@
-<md-content>
-  <md-tabs md-dynamic-height md-border-bottom md-selected="homeCtrl.selectedIndex">
-    <md-tab label="Step 1">
-      <md-content class="md-padding">
-        <h1 class="md-display-2">{{homeCtrl.productName}}</h1>
+<md-tabs md-dynamic-height
+          md-border-bottom
+          tabindex="-1"
+          md-selected="homeCtrl.selectedIndex">
+  <md-tab label="Step 1">
+    <md-content class="md-padding">
+      <h1 class="md-display-2 product-name">{{homeCtrl.productName}}</h1>
 
-        <md-card>
-          <form novalidate ng-model="homeCtrl.form" name="form">
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">Action buttons</span>
-            </md-card-title-text>
-          </md-card-title>
+      <md-card>
+        <form novalidate ng-model="homeCtrl.form" name="form">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">
+              User Data and Product Review
+            </span>
+            <span class="md-subhead">
+              Please fill in all the fields to continue.
+            </span>
+          </md-card-title-text>
+        </md-card-title>
 
-          <md-card-content>
-            <md-input-container class="md-block" flex-gt-sm>
-              <label>Your name*</label>
-              <input ng-model="homeCtrl.user.name" required="">
-            </md-input-container>
+        <md-card-content>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Your name*</label>
+            <input ng-model="homeCtrl.user.name" required="" tabindex="1">
+          </md-input-container>
 
-            <md-input-container class="md-block" flex-gt-sm>
-              <label>Title</label>
-              <input ng-model="homeCtrl.user.title">
-            </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Title</label>
+            <input ng-model="homeCtrl.user.title" tabindex="2">
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Review*</label>
+            <textarea ng-model="homeCtrl.user.review"
+              tabindex="3"
+              md-maxlength="250"
+              rows="5"
+              md-select-on-focus
+              required="">
+            </textarea>
+          </md-input-container>
 
             <md-input-container class="md-block">
-              <label>Review*</label>
-              <textarea ng-model="homeCtrl.user.review"
-                md-maxlength="250"
-                rows="5"
-                md-select-on-focus
-                required="">
-              </textarea>
-            </md-input-container>
+              <span>Rating*</span>
+              <input-stars ng-model="homeCtrl.user.rating"
+                            max="5"
+                            tabindex="4"
+                            required="">
+              </input-stars>
+          </md-input-container>
+        </md-card-content>
 
-              <md-input-container class="md-block">
-                <span>Rating*</span>
-                <input-stars ng-model="homeCtrl.user.rating" max="5" required="">
-                </input-stars>
-            </md-input-container>
-          </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button ng-click="homeCtrl.next(form.$valid)"
+                      tabindex="5"
+                      ng-disabled="!form.$valid">
+            Next
+          </md-button>
+        </md-card-actions>
+      </form>
+      </md-card>
+    </md-content>
+  </md-tab>
 
-          <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-click="homeCtrl.next()"
-              ng-disabled="!form.$valid">Next</md-button>
-          </md-card-actions>
-        </form>
-        </md-card>
-      </md-content>
-    </md-tab>
-    <md-tab label="two">
-      <md-content class="md-padding">
-        <h1 class="md-display-2">Tab Two</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
-        <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
-        <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-      </md-content>
-    </md-tab>
-    <md-tab label="three">
-      <md-content class="md-padding">
-        <h1 class="md-display-2">Tab Three</h1>
-        <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-      </md-content>
-    </md-tab>
-  </md-tabs>
-</md-content>
+  <md-tab label="Step 2" ng-disabled="homeCtrl.secondLocked">
+    <md-content class="md-padding">
+      <h1 class="md-display-2 product-name">{{homeCtrl.productName}}</h1>
+
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">
+              Share in social media
+            </span>
+          </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content>
+          <md-input-container class="md-block" flex-gt-sm>
+            <div ng-repeat="item in homeCtrl.socials">
+              <md-checkbox ng-checked="homeCtrl.exists(item)"
+                           ng-click="homeCtrl.toggleSocials(item)">
+                {{item}}
+              </md-checkbox>
+            </div>
+          </md-input-container>
+
+        </md-card-content>
+
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button ng-click="homeCtrl.next(form.$valid)"
+                      tabindex="5"
+                      ng-disabled="!form.$valid">
+            Next
+          </md-button>
+        </md-card-actions>
+      </md-card>
+    </md-content>
+  </md-tab>
+
+  <md-tab label="Step 3" ng-disabled="homeCtrl.thirdLocked">
+    <md-content class="md-padding">
+      <h1 class="md-display-2 product-name">{{homeCtrl.productName}}</h1>
+
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">
+              Preview Review
+            </span>
+          </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content>
+          <input-stars class="stars-big"
+                        ng-model="homeCtrl.user.rating"
+                        max="5"
+                        readonly="true">
+          </input-stars>
+
+          <h2 ng-show="homeCtrl.user.title">
+            {{homeCtrl.user.title}}
+          </h2>
+
+          <p>
+            {{homeCtrl.user.review}}
+          </p>
+
+          <md-input-container class="md-block"
+                              flex-gt-sm
+                              ng-hide="!homeCtrl.socialsSelected.length">
+            <h3 class="md-title">Share on:</h3>
+            <div ng-repeat="item in homeCtrl.socialsSelected">
+              <md-button class="md-raised md-primary"
+                         ng-click="homeCtrl.share(item)">
+                Share on {{item}}
+              </md-button>
+            </div>
+          </md-input-container>
+        </md-card-content>
+
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button ng-click="homeCtrl.publish()"
+                     tabindex="5"
+                     ng-disabled="!form.$valid">
+            Publish
+          </md-button>
+        </md-card-actions>
+      </md-card>
+    </md-content>
+  </md-tab>
+</md-tabs>

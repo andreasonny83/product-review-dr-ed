@@ -16,27 +16,19 @@ var runSequence = require('run-sequence');
 var openURL = require('open');
 var wiredep = require('wiredep').stream;
 var path = require('path');
+var config = require('./gulp/config.js');
 var Server = require('karma').Server;
 
 var args = require('minimist')(process.argv.slice(2));
 
 // Replace '/' with your production base URL
 //
-// eg. setting baseUrl to '/subdomain/' will write your _build/index.html like this:
+// eg. setting baseUrl to '/subdomain/' will write your dist/index.html like this:
 // <head><base href="/subdomain/">...
 // The default value is set to '/'
 //
 // for more information: https://docs.angularjs.org/guide/$location
 var baseUrl = args.base || '/';
-
-var AUTOPREFIXER = [
-  'last 2 versions',
-  'safari >= 7',
-  'ie >= 9',
-  'ff >= 30',
-  'ios 6',
-  'android 4'
-];
 
 gulp.task('open', function() {
   openURL('http://localhost:9000/');
@@ -44,7 +36,7 @@ gulp.task('open', function() {
 
 gulp.task('start:server', ['open'], function() {
   $.connect.server({
-    root: ['src', '.tmp'],
+    root: [config.src, config.tmp],
     port: 9000,
     livereload: true,
     middleware: function(connect) {
@@ -59,7 +51,7 @@ gulp.task('build:serve', function() {
   openURL('http://localhost:9001/');
 
   $.connect.server({
-    root: ['_build'],
+    root: [config.dist],
     port: 9001,
     livereload: true
   });
@@ -68,37 +60,37 @@ gulp.task('build:serve', function() {
 // reload all Browsers
 gulp.task('reload', function() {
   gulp
-  .src('src/index.html')
+  .src(config.src + '/index.html')
   .pipe($.connect.reload());
 });
 
 // optimize images
 gulp.task('images', function() {
   return gulp
-    .src('src/images/**/*')
-    .pipe($.changed('_build/images'))
+    .src(config.src + '/images/**/*')
+    .pipe($.changed(config.dist + '/images'))
     .pipe($.imagemin({
       optimizationLevel: 7,
       progressive: true,
       interlaced: true
     }))
-    .pipe(gulp.dest('_build/images'))
+    .pipe(gulp.dest(config.dist + '/images'))
     .pipe($.size({title: 'images'}));
 });
 
 // copy fonts
 gulp.task('fonts', function() {
   gulp
-    .src(['src/fonts/**/*'])
-    .pipe(gulp.dest('_build/fonts'))
+    .src([config.src + '/fonts/**/*'])
+    .pipe(gulp.dest(config.dist + '/fonts'))
     .pipe($.size({title: 'fonts'}));
 });
 
 // delete build folder
 gulp.task('clean', function() {
   del([
-    '_build/',
-    '.tmp/'
+    config.tmp,
+    config.dist
   ], {
     dot: true
   });
@@ -108,11 +100,11 @@ gulp.task('clean', function() {
 // will auto-update browsers
 gulp.task('sass', function() {
   return gulp
-    .src('src/sass/main.scss')
+    .src(config.src + '/sass/main.scss')
     .pipe($.sass({
       outputStyle: 'expanded'
     }).on('error', $.sass.logError))
-    .pipe(gulp.dest('.tmp/styles'))
+    .pipe(gulp.dest(config.tmp + '/styles'))
     .pipe($.connect.reload({
       stream: true
     }))
@@ -125,24 +117,24 @@ gulp.task('sass', function() {
 // SASS Build task
 gulp.task('sass:build', function() {
   return gulp
-    .src('src/sass/**/*.scss')
+    .src(config.src + '/sass/**/*.scss')
     // .pipe($.sourcemaps.init())
     .pipe($.sass({
       outputStyle: 'compressed'
     }).on('error', $.sass.logError))
     .pipe($.cssnano({
-      autoprefixer: {browsers: AUTOPREFIXER, add: true},
+      autoprefixer: {browsers: config.autoprefixer, add: true},
       safe: true
     }))
     // .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('.tmp/styles'))
+    .pipe(gulp.dest(config.tmp + '/styles'))
     .pipe($.size({title: 'sass'}));
 });
 
 gulp.task('scripts', function() {
   return gulp
     .src([
-      'src/app/**/*.js',
+      config.src + '/app/**/*.js',
       '!**/test/**/*'
     ])
     .pipe($.connect.reload());
@@ -152,63 +144,63 @@ gulp.task('scripts', function() {
 // in order to find all the source scripts in one place
 gulp.task('copy:scripts', function() {
   gulp
-    .src(['src/app/**/*'])
-    .pipe(gulp.dest('.tmp/app'));
+    .src([config.src + '/app/**/*'])
+    .pipe(gulp.dest(config.tmp + '/app'));
 });
 
 gulp.task('fonts', function() {
   gulp
     .src(['bower_components/font-awesome/fonts/**/*'])
-    .pipe(gulp.dest('_build/fonts'));
+    .pipe(gulp.dest(config.dist + '/fonts'));
 });
 
-// Copy the root files from your src folder inside your _build one
+// Copy the root files from your src folder inside your dist one
 gulp.task('copy:root', function() {
   gulp
     .src([
-      'src/.htaccess',
-      'src/404.html',
-      'src/browserconfig.xml',
-      'src/favicon.ico',
-      'src/manifest.json',
-      'src/manifest.webapp',
-      'src/robots.txt'
+      config.src + '/.htaccess',
+      config.src + '/404.html',
+      config.src + '/browserconfig.xml',
+      config.src + '/favicon.ico',
+      config.src + '/manifest.json',
+      config.src + '/manifest.webapp',
+      config.src + '/robots.txt'
     ], {
       dot: true
     })
-    .pipe(gulp.dest('_build'))
+    .pipe(gulp.dest(config.dist))
     .pipe($.size({title: 'copy'}));
 });
 
 gulp.task('wiredep', function() {
   return gulp
-  .src('src/index.html')
+  .src(config.src + '/index.html')
   .pipe(wiredep())
-  .pipe(gulp.dest('src/'));
+  .pipe(gulp.dest(config.src));
 });
 
 gulp.task('usemin', ['wiredep'], function() {
   return gulp
-    .src('src/index.html')
-    .pipe(gulp.dest('_build/'))
+    .src(config.src + '/index.html')
+    .pipe(gulp.dest(config.dist))
     .pipe($.htmlReplace({
       baseUrl: '<base href="' + baseUrl + '">',
       templates: '<script src="app/templates.js"></script>'
     }))
-    .pipe(gulp.dest('_build/'))
+    .pipe(gulp.dest(config.dist))
     .pipe($.usemin({
       css: ['concat', $.cssnano({
-        autoprefixer: {browsers: AUTOPREFIXER, add: true}
+        autoprefixer: {browsers: config.autoprefixer, add: true}
       })],
       main: [$.uglify(), 'concat']
     }))
-    .pipe(gulp.dest('_build/'));
+    .pipe(gulp.dest(config.dist));
 });
 
 // minify HTML
 gulp.task('htmlmin', function() {
   return gulp
-    .src('_build/index.html')
+    .src(config.dist + '/index.html')
     .pipe($.htmlmin({
       removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true,
@@ -217,13 +209,13 @@ gulp.task('htmlmin', function() {
       removeTagWhitespace: true,
       collapseWhitespace: true
     }))
-    .pipe(gulp.dest('_build/'));
+    .pipe(gulp.dest(config.dist));
 });
 
 // make a templateCache module from all HTML files
 gulp.task('templates', function() {
   return gulp
-    .src('src/app/**/*.html')
+    .src(config.src + '/app/**/*.html')
     .pipe($.htmlmin({
       collapseWhitespace: true
     }))
@@ -231,7 +223,7 @@ gulp.task('templates', function() {
       module: 'app',
       root: 'app'
     }))
-    .pipe(gulp.dest('.tmp/app'));
+    .pipe(gulp.dest(config.tmp + '/app'));
 });
 
 /**
