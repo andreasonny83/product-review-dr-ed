@@ -24,7 +24,7 @@ var args = require('minimist')(process.argv.slice(2));
 
 // Replace '/' with your production base URL
 //
-// eg. setting baseUrl to '/subdomain/' will write your _build/index.html like this:
+// eg. setting baseUrl to '/subdomain/' will write your dist/index.html like this:
 // <head><base href="/subdomain/">...
 // The default value is set to '/'
 //
@@ -152,7 +152,7 @@ gulp.task('fonts', function() {
     .pipe(gulp.dest(config.dist + '/fonts'));
 });
 
-// Copy the root files from your src folder inside your _build one
+// Copy the root files from your src folder inside your dist one
 gulp.task('copy:root', function() {
   gulp
     .src([
@@ -185,7 +185,7 @@ gulp.task('usemin', ['wiredep'], function() {
       baseUrl: '<base href="' + baseUrl + '">',
       templates: '<script src="app/templates.js"></script>'
     }))
-    .pipe(gulp.dest('_build/'))
+    .pipe(gulp.dest(config.dist))
     .pipe($.usemin({
       css: ['concat', $.cssnano({
         autoprefixer: {browsers: config.autoprefixer, add: true}
@@ -198,7 +198,7 @@ gulp.task('usemin', ['wiredep'], function() {
 // minify HTML
 gulp.task('htmlmin', function() {
   return gulp
-    .src('_build/index.html')
+    .src(config.dist + '/index.html')
     .pipe($.htmlmin({
       removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true,
@@ -207,7 +207,7 @@ gulp.task('htmlmin', function() {
       removeTagWhitespace: true,
       collapseWhitespace: true
     }))
-    .pipe(gulp.dest('_build/'));
+    .pipe(gulp.dest(config.dist));
 });
 
 // make a templateCache module from all HTML files
