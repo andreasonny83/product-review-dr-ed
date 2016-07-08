@@ -13,11 +13,12 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
-var openURL = require('open');
 var wiredep = require('wiredep').stream;
 var path = require('path');
 var config = require('./gulp/config.js');
 var Server = require('karma').Server;
+var browserSync = require('browser-sync').create();
+var fallback = require('connect-history-api-fallback');
 
 var args = require('minimist')(process.argv.slice(2));
 
@@ -30,30 +31,34 @@ var args = require('minimist')(process.argv.slice(2));
 // for more information: https://docs.angularjs.org/guide/$location
 var baseUrl = args.base || '/';
 
-gulp.task('open', function() {
-  openURL('http://localhost:9000/');
-});
-
-gulp.task('start:server', ['open'], function() {
-  $.connect.server({
-    root: [config.src, config.tmp],
-    port: 9000,
-    livereload: true,
-    middleware: function(connect) {
-      return [connect()
-        .use('/bower_components', connect.static('bower_components'))
-      ];
+gulp.task('start:server', function() {
+  browserSync.init({
+    server: {
+      baseDir: [config.src, config.tmp],
+      routes: {
+        '/bower_components': 'bower_components'
+      },
+      middleware: [
+        fallback({
+          index: '/index.html',
+          htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'] // systemjs workaround
+        })
+      ]
     }
   });
 });
 
 gulp.task('build:serve', function() {
-  openURL('http://localhost:9001/');
-
-  $.connect.server({
-    root: [config.dist],
-    port: 9001,
-    livereload: true
+  browserSync.init({
+    server: {
+      baseDir: config.dist,
+      middleware: [
+        fallback({
+          index: '/index.html',
+          htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'] // systemjs workaround
+        })
+      ]
+    }
   });
 });
 
@@ -61,7 +66,7 @@ gulp.task('build:serve', function() {
 gulp.task('reload', function() {
   gulp
   .src(config.src + '/index.html')
-  .pipe($.connect.reload());
+  .pipe(browserSync.reload);
 });
 
 // optimize images
@@ -104,13 +109,8 @@ gulp.task('sass', function() {
       outputStyle: 'expanded'
     }).on('error', $.sass.logError))
     .pipe(gulp.dest(config.tmp + '/styles'))
-    .pipe($.connect.reload({
-      stream: true
-    }))
-    .pipe($.notify({
-      message: 'Styles task complete'
-    }))
-    .pipe($.size({title: 'sass'}));
+    .pipe($.size({title: 'sass'}))
+    .pipe(browserSync.stream());
 });
 
 // SASS Build task
@@ -136,7 +136,6 @@ gulp.task('scripts', function() {
       config.src + '/app/**/*.js',
       '!**/test/**/*'
     ])
-    .pipe($.connect.reload());
 });
 
 // Move all script files in the .temp is required by usemin
@@ -235,8 +234,8 @@ gulp.task('serve', ['clean'], function() {
     'sass',
     'wiredep',
     function() {
-      gulp.watch('src/**/*.html', ['reload']);
-      gulp.watch('src/app/**/*.js', ['scripts']);
+      gulp.watch('src/**/*.html').on('change', browserSync.reload);
+      gulp.watch('src/app/**/*.js').on('change', browserSync.reload);
       gulp.watch('src/sass/**/*.scss', ['sass']);
     }
   );

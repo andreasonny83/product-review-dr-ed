@@ -48,6 +48,7 @@
       });
 
       vm.productName = productName.join(' ');
+      vm.pageReady = true;
     }
 
     vm.publish = function() {
