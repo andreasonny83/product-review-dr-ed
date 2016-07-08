@@ -1,18 +1,7 @@
-/**
-  DrEd.com Product review
-  Copyright (c) 2016 by andreasonny83. All Rights Reserved.
-
-  This code may only be used under the MIT style license.
-
-  MIT license: https://andreasonny.mit-license.org/@2016/
-*/
-
-'use strict';
-
-var bowerList = require('./conf/karma-files.conf.js');
+// Karma configuration
+// Generated on Thu Jul 07 2016 18:38:49 GMT+0100 (BST)
 
 module.exports = function(config) {
-
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -20,16 +9,23 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'angular-filesort'],
+    frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
-    files: bowerList(['src/app/**/*.js']),
-
-    angularFilesort: {
-      whitelist: [
-        'src/app/**/*.js'
-      ]
-    },
+    files: [
+      'bower_components/angular/angular.js',
+      'bower_components/angular-animate/angular-animate.js',
+      'bower_components/angular-route/angular-route.js',
+      'bower_components/angular-sanitize/angular-sanitize.js',
+      'bower_components/angular-aria/angular-aria.js',
+      'bower_components/angular-messages/angular-messages.js',
+      'bower_components/angular-material/angular-material.js',
+      'bower_components/angular-input-stars-directive/angular-input-stars.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'src/app/app.js',
+      'src/app/**/*.js',
+      'src/app/**/*.html'
+    ],
 
     // list of files to exclude
     exclude: [
@@ -38,6 +34,12 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'src/app/**/*.html': ['ng-html2js']
+    },
+
+    ngHtml2JsPreprocessor: {
+      stripPrefix: 'src/',
+      moduleName: 'my.templates'
     },
 
     // test results reporter to use
@@ -46,11 +48,20 @@ module.exports = function(config) {
     reporters: ['progress'],
 
     // web server port
-    port: 9876,
+    port: 8080,
+
+    // Which plugins to enable
+    plugins: [
+      'karma-phantomjs-launcher',
+      'karma-jasmine',
+      'karma-ng-html2js-preprocessor'
+    ],
 
     // enable / disable colors in the output (reporters and logs)
     colors: true,
 
+    // level of logging
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -58,16 +69,14 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: [
-      'PhantomJS'
-    ],
+    browsers: ['PhantomJS'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
 
     // Concurrency level
-    // how many browser should be started simultanous
+    // how many browser should be started simultaneous
     concurrency: Infinity
   });
 };
