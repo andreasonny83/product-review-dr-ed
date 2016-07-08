@@ -24,7 +24,7 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       'src/app/app.js',
       'src/app/**/*.js',
-      'test/**/*.js'
+      'src/app/**/*.html'
     ],
 
     // list of files to exclude
@@ -34,6 +34,12 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'src/app/**/*.html': ['ng-html2js']
+    },
+
+    ngHtml2JsPreprocessor: {
+      stripPrefix: 'src/',
+      moduleName: 'my.templates'
     },
 
     // test results reporter to use
@@ -47,7 +53,8 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+      'karma-ng-html2js-preprocessor'
     ],
 
     // enable / disable colors in the output (reporters and logs)

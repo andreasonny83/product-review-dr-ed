@@ -5,24 +5,20 @@ describe('Directive: backButton', function() {
   var $rootScope;
   var element;
 
-  beforeEach(module('app'));
+  beforeEach(module('app', 'my.templates'));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, $httpBackend) {
+  beforeEach(inject(function(_$compile_, _$rootScope_, $templateCache) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
 
-    // $httpBackend.when('GET', 'views/tmpl/app.html').respond(false);
-    $httpBackend.whenGET('app/page-header/page-header.html').passThrough();
-
-    // Compile a piece of HTML containing the directive
-    // element.click();
+    var template = $templateCache.get('app/page-header/page-header.html');
+    $templateCache.put('app/page-header/page-header.html', template);
   }));
 
   it('Replaces the element with the appropriate content', function() {
     element = $compile('<page-header></page-header>')($rootScope);
-    $rootScope.$apply();
+    $rootScope.$digest();
     expect(1).toBe(1);
-    console.log(element);
     expect(element.html()).toContain('DrEd.com Product Review');
   });
 });

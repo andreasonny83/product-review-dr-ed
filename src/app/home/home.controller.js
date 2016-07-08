@@ -30,19 +30,18 @@
       var search = $location.search();
       var productName;
 
-      // if (!search.product || !search.product.length) {
-      //   $location.path('/404');
-      //   return;
-      // }
+      if (!search.product || !search.product.length) {
+        $location.path('/404');
+        return;
+      }
 
-      productName = ['hello', 'world'];
-      // productName = search.product.match(/(\w+)/g);
+      productName = search.product.match(/(\w+)/g);
 
       // The product name is not valid
-      // if (!productName || productName.length < 1) {
-      //   $location.path('/404');
-      //   return;
-      // }
+      if (!productName || productName.length < 1) {
+        $location.path('/404');
+        return;
+      }
 
       productName.filter(function(val) {
         return val.toLowerCase();

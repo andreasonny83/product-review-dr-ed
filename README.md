@@ -22,10 +22,10 @@ To build and run this project in your local machine you need to have
 [NPM](https://www.npmjs.org/) and
 [Gulp](https://github.com/gulpjs/gulp/).
 
-Install all the `npm` dependencies with:
+Install all the `npm` and `Bower` dependencies with:
 
 ```sh
-npm Install
+npm Install && bower install
 ```
 
 ## Running the app
